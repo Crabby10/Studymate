@@ -1,0 +1,16 @@
+{
+  "name": "studymate-ai-monorepo",
+  "version": "1.0.0",
+  "description": "StudyMate AI Full-Stack Application",
+  "main": "run-app.js",
+  "type": "module",
+  "scripts": {
+    "setup": "npm install --prefix client --legacy-peer-deps && npm install --prefix server",
+    "build": "npm install --prefix client --legacy-peer-deps && npm run build --prefix client && npm install --prefix server",
+    "start": "npm run start --prefix server",
+    "dev": "node run-app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

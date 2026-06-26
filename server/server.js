@@ -314,7 +314,22 @@ app.get('/api/stats', authenticateToken, async (req, res) => {
   }
 });
 
-// Catch-all
+// Serve static built client React files in production
+const clientBuildPath = path.resolve('../client/dist');
+if (fs.existsSync(clientBuildPath)) {
+  console.log(`📦 Serving React frontend static assets from: ${clientBuildPath}`);
+  app.use(express.static(clientBuildPath));
+  
+  // Direct all browser page navigations to client index.html (React Router support)
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api')) {
+      return next();
+    }
+    res.sendFile(path.join(clientBuildPath, 'index.html'));
+  });
+}
+
+// Catch-all for unmatched API requests
 app.use((req, res) => {
   res.status(404).json({ error: 'Endpoint not found' });
 });
